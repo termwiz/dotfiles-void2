@@ -1,0 +1,70 @@
+#!/bin/sh
+#XBPS-wrapper 1.0.3
+#This is a simple package wrapper written for the xbps package manager.
+#It only supports the most basic functions of xbps, but you can still use 
+#other arguments behind the commands to get extra functionality.
+
+
+#Colors
+RED='\033[0;31m'
+NC='\033[0m'
+
+#Help
+if [ "$1" = "help" ]; then
+    printf '\033[?7l' #Disable wrap
+    printf "XBPS-wrapper: 1.0.3\n\n"
+    printf "Help commands:\n"
+    printf "   ${RED}install${NC} - Install a program. Equal to 'xbps-install -S'\n"
+    printf "   ${RED}remove${NC}  - Remove an installed program. Equal to 'xbps-remove'\n"
+    printf "   ${RED}update${NC}  - Update the system. Equal to 'xbps-query \n"
+    printf "   ${RED}search${NC}  - Search for program in repositories. Equal to 'xbps-query -Rs'\n"
+    printf "   ${RED}list${NC}    - List or search for installed programs. Equal to 'xbps-query -l'\n"
+    printf "   ${RED}help${NC}    - Show this message.\n"
+    printf '\033[?7h'
+fi
+
+#Install
+if [ "$1" = "install" ]; then
+    if [ "$2" = "" ]; then
+        printf "${RED}Error:${NC} No package selected for installation.\n"
+    else
+        shift
+        sudo xbps-install -S "$@"
+    fi
+fi
+
+#Remove
+if [ "$1" = "remove" ]; then
+    if [ "$2" = "" ]; then
+        printf "${RED}Error:${NC} No package selected for uninstallation.\n"
+    else
+        shift
+        sudo xbps-remove "$@"
+    fi  
+fi
+
+#Update
+if [ "$1" = "update" ]; then
+    shift
+    sudo xbps-install -u "$@"
+fi
+
+#Search
+if [ "$1" = "search" ]; then
+    if [ "$2" = "" ]; then
+        printf "${RED}Error:${NC} No string to search after.\n"
+    else
+        shift
+        xbps-query -Rs "$@"
+    fi
+fi
+
+#List
+if [ "$1" = "list" ]; then
+    if [ "$2" = "" ]; then
+        xbps-query -l
+    else
+        shift
+        xbps-query -l | grep "$@"
+    fi
+fi

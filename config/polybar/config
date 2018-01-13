@@ -1,0 +1,179 @@
+[colors]
+background = #151515
+background-alt = #212121
+foreground = #fafafa
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+calendar = #82B061
+volume = #82B061
+cpu = #82B061
+ram = #82B061
+clock = #82B061
+logo = #fafafa
+
+[bar/top]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 24
+offset-x = 0
+offset-y = 0
+radius = 0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 4
+padding-right = 4 
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = Terminus:pixelsize=13;2
+font-1 = unifont:fontformat=truetype:size=11:antialias=false;2
+font-2 = Siji:size=8;1
+
+modules-left = logo bspwm
+modules-center = date time
+modules-right = volume wifi battery cpu memory
+
+tray-position = right
+tray-padding = 2
+
+
+[module/logo]
+type = custom/script
+
+exec = echo "Linux"
+format-prefix = "  Void "
+format-prefix-foreground = #82B061
+
+
+[module/bspwm]
+type = internal/bspwm
+
+pin-workspaces = true
+inline-mode = false
+enable-click = true
+enable-scroll = true
+reverse-scroll = false
+
+format = <label-state> <label-mode>
+label-monitor = %name%
+
+label-dimmed-foreground = #555
+label-dimmed-underline = ${bar/top.background}
+label-dimmed-focused-background = #f00
+
+; Available tokens:   %name%   %icon%   %index%
+label-focused = 
+label-focused-foreground = #82B061
+label-focused-padding = 1
+
+label-occupied = 
+label-occupied-padding = 1
+
+
+label-urgent = U
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-padding = 1
+
+label-empty = 
+label-empty-foreground = #55
+label-empty-padding = 1
+
+
+[module/wifi]
+type = internal/network
+interface = wlan0
+interval = 3.0
+
+format-connected = <label-connected>
+label-connected = ""
+label-connected-background = #82B061
+label-connected-padding = 1
+
+
+[module/battery]
+type = custom/script
+      
+exec = echo " 47%"
+format-prefix = ""
+format-prefix-foreground = #82B061
+
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.cpu}
+label = %percentage%%
+
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.ram}
+label = %percentage_used%%
+
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = "%d/%m-%Y"
+date-alt = "%a Week %V"
+
+time = %H:%M
+time-alt = %H:%M
+
+format-prefix = " "
+format-prefix-foreground = ${colors.calendar}
+
+label = %date%
+format-prefix-backround = #fff
+
+
+[module/time]
+type = internal/date
+interval = 5
+
+time = %H:%M
+format-prefix = " "
+format-prefix-foreground = ${colors.clock}
+label = %time%
+
+
+[module/volume]
+type = internal/volume
+
+format-volume = <ramp-volume> <label-volume>
+label-volume = %percentage%%
+
+format-muted = <label-muted>
+label-muted = 
+label-muted-foreground = #66
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.volume}
+
+
+[settings]
+screenchange-reload = true
+
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
