@@ -7,6 +7,7 @@ primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 calendar = #82B061
+battery = #82B061
 volume = #82B061
 cpu = #82B061
 ram = #82B061
@@ -99,16 +100,35 @@ interval = 3.0
 
 format-connected = <label-connected>
 label-connected = ""
-label-connected-background = #82B061
+label-connected-foreground = #82B061
 label-connected-padding = 1
 
 
 [module/battery]
-type = custom/script
-      
-exec = echo " 47%"
-format-prefix = ""
-format-prefix-foreground = #82B061
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+
+label-discharging-foreground = ${colors.battery}
+label-charging-foreground = ${colors.battery}
+label-charging-padding = 1
+label-discharging-padding = 1
+format-charging = <animation-charging><label-charging>
+
+format-discharging = <ramp-capacity><label-discharging>
+
+format-full-prefix = "  "
+format-full-prefix-foreground = ${colors.battery}
+ramp-capacity-0 = "  "
+ramp-capacity-1 = "  "
+ramp-capacity-2 = "  "
+
+animation-charging-0 = "  "
+animation-charging-1 = "  "
+animation-charging-2 = "  "
+animation-charging-foreground = ${colors.battery}
+animation-charging-framerate = 750
 
 
 [module/cpu]
